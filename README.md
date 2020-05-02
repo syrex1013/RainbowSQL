@@ -13,11 +13,11 @@ Nearly 100 SQLI Vulnerable URL's after 2 minutes!
 * Supports many databases         
 
 # Upcoming functions          
-* Proxy support           
+* ~~Proxy support~~ (Added HTTP/S Proxy support!)            
 * Other SQL Injections techniques           
 * Checking database name      
 * Checking database type        
-* Google implementation
+* ~~Google implementation~~ (Added Google Scraper. Wont work with slow or free proxies!)              
 and more!             
 
 # Information           

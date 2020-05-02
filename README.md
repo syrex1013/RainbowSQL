@@ -20,4 +20,4 @@ Nearly 100 SQLI Vulnerable URL's after 2 minutes!
 and more!             
 
 # Want to add a feature?          
-Just create issue with "feature" template.      
+Just create issue with "enhancement" label.      

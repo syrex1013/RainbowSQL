@@ -16,7 +16,8 @@ Nearly 100 SQLI Vulnerable URL's after 2 minutes!
 * Proxy support           
 * Other SQL Injections techniques           
 * Checking database name      
-* Checking database type          
+* Checking database type        
+* Google implementation
 and more!             
 
 # Information           

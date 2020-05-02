@@ -12,12 +12,14 @@ Nearly 100 SQLI Vulnerable URL's after 2 minutes!
 * Way faster than SQL Dumper.         
 * Supports many databases         
 
-
 # Upcoming functions          
 * Proxy support           
 * Other SQL Injections techniques           
 * Checking database name          
 and more!             
+
+# Information           
+For now scraping is done using Bing so not every dorks will work!           
 
 # Want to add a feature?          
 Just create issue with "enhancement" label.      

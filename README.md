@@ -18,8 +18,11 @@ Nearly 100 SQLI Vulnerable URL's after 2 minutes!
 * Checking database name      
 * Checking database type        
 * ~~Google implementation~~ (Added Google Scraper. Wont work with slow or free proxies!)              
-and more!             
+and more!               
 
+# Supported search engines     
+* Bing - No Proxies needed!         
+* Google - Only HQ proxies will work.         
 # Information           
 For now scraping is done using Bing so not every dorks will work!           
 

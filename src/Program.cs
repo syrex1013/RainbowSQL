@@ -20,7 +20,7 @@ namespace RainbowSQL2
         static List<string> proxies_used = new List<string>(); //Proxies used right now
         static Random random = new Random();
         static string[] URL_VERIFICATION_STRINGS = { "http", ".", "=", "/" }; //String must contain these to be applicable URL;
-        static string[] URL_BAD_STRINGS = { "microsoft", "google", "youtube", "facebook", "stackoverflow", "bing" ,"url="}; //URL cannot contain these to be applicable URL;
+        static string[] URL_BAD_STRINGS = { "microsoft", "google", "youtube", "facebook", "stackoverflow", "bing" ,"/url?"}; //URL cannot contain these to be applicable URL;
         static string[] SQL_Errors = { "mysql_fetch", "SQL syntax", "ORA-01756", "OLE DB Provider for SQL Server", "SQLServer JDBC Driver", "Error Executing Database Query" };
         static int Processed_urls = 0;
         static void Main(string[] args)
@@ -198,8 +198,7 @@ namespace RainbowSQL2
                             {
                                 //We cant be banned, cause like how. Only one request was made so there is some error on page. 404 or smh. Just skip over this element by setting success to 1.
                                 success = 1;
-                                
-                                
+                                                             
                             }
                         }
                     }
@@ -208,6 +207,7 @@ namespace RainbowSQL2
                 //Add processed
                 Processed_urls++;
             });
+            WriteStatusSQLERROR();
             //Write all data to file!
             //Scraping has ended. Write ending
             Console.ForegroundColor = ConsoleColor.Green;
@@ -336,7 +336,7 @@ namespace RainbowSQL2
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Console.WriteLine("[!] Your ip was banned. Click enter to exit!");
                                     Console.ReadKey();
-                                    File.WriteAllLines("vulnerable.txt", vulnerable);
+                                    File.WriteAllLines("urls.txt", urls);
                                     Environment.Exit(1);
                                 }
                             }
@@ -471,7 +471,7 @@ namespace RainbowSQL2
                                     Console.ForegroundColor = ConsoleColor.Red;
                                     Console.WriteLine("[!] Your ip was banned. Click enter to exit!");
                                     Console.ReadKey();
-                                    File.WriteAllLines("vulnerable.txt", vulnerable);
+                                    File.WriteAllLines("urls.txt", urls);
                                     Environment.Exit(1);
                                 }
                             }
@@ -493,28 +493,28 @@ namespace RainbowSQL2
 
         private static void WriteStatusBingScrape(int pages_per_dork, string dork)
         {
-            Console.WriteLine("Scraped: " + urls.Count());
-            Console.WriteLine("Pages per dork: " + pages_per_dork);
-            Console.WriteLine("Dorks: " + dorks.Count());
+            Console.WriteLine("Scraped: " + urls.Count()+"                  ");
+            Console.WriteLine("Pages per dork: " + pages_per_dork + "                  ");
+            Console.WriteLine("Dorks: " + dorks.Count() + "                  ");
             Console.WriteLine("Proxies left: " + proxies.Count() + "     ");
-            Console.WriteLine("Current dork: " + dork);
+            Console.WriteLine("Current dork: " + dork + "                  ");
             Console.SetCursorPosition(0, Console.CursorTop - 5);
         }
         private static void WriteStatusGoogleScrape(int pages_per_dork, string dork)
         {
-            Console.WriteLine("Scraped: " + urls.Count());
-            Console.WriteLine("Pages per dork: " + pages_per_dork);
-            Console.WriteLine("Dorks: " + dorks.Count());
+            Console.WriteLine("Scraped: " + urls.Count() + "                  ");
+            Console.WriteLine("Pages per dork: " + pages_per_dork + "                  ");
+            Console.WriteLine("Dorks: " + dorks.Count() + "                  ");
             Console.WriteLine("Proxies left: " + proxies.Count() + "       ");
-            Console.WriteLine("Current dork: " + dork);
+            Console.WriteLine("Current dork: " + dork + "                  ");
             Console.SetCursorPosition(0, Console.CursorTop - 5);
         }
         private static void WriteStatusSQLERROR()
         {
             //Write general stats for testing
-            Console.WriteLine("Processed: " + Processed_urls);
-            Console.WriteLine("Left: " + (urls.Count() - Processed_urls));
-            Console.WriteLine("Vulnerable: " + vulnerable.Count());
+            Console.WriteLine("Processed: " + Processed_urls + "                  ");
+            Console.WriteLine("Left: " + (urls.Count() - Processed_urls) + "                  ");
+            Console.WriteLine("Vulnerable: " + vulnerable.Count() + "                  ");
             Console.SetCursorPosition(0, Console.CursorTop - 3);
         }
 

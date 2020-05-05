@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RainbowSQL2", "RainbowSQL2.csproj", "{86D03812-DA1B-4E48-91A5-DF5A4A117A85}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86D03812-DA1B-4E48-91A5-DF5A4A117A85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86D03812-DA1B-4E48-91A5-DF5A4A117A85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86D03812-DA1B-4E48-91A5-DF5A4A117A85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86D03812-DA1B-4E48-91A5-DF5A4A117A85}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E7D84076-90A9-4CAB-82AC-810C4F76728F}
+	EndGlobalSection
+EndGlobal

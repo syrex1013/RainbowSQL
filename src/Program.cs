@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -17,10 +18,9 @@ namespace RainbowSQL2
         static List<string> dorks = new List<string>(); //List of dorks
         static List<string> urls = new List<string>(); //List of scraped urls
         static List<string> vulnerable = new List<string>(); //Vulnerable urls
-        static List<string> proxies_used = new List<string>(); //Proxies used right now
         static Random random = new Random();
         static string[] URL_VERIFICATION_STRINGS = { "http", ".", "=", "/" }; //String must contain these to be applicable URL;
-        static string[] URL_BAD_STRINGS = { "microsoft", "google", "youtube", "facebook", "stackoverflow", "bing" ,"/url?"}; //URL cannot contain these to be applicable URL;
+        static string[] URL_BAD_STRINGS = { "microsoft", "google", "youtube", "facebook", "stackoverflow", "bing", "/url?" }; //URL cannot contain these to be applicable URL;
         static string[] SQL_Errors = { "mysql_fetch", "SQL syntax", "ORA-01756", "OLE DB Provider for SQL Server", "SQLServer JDBC Driver", "Error Executing Database Query" };
         static int Processed_urls = 0;
         static void Main(string[] args)
@@ -80,6 +80,7 @@ namespace RainbowSQL2
 
         //SQL INJECTION SCANNERS
         private static void SQL_ERROR_SCANNER2()
+
         {
             //Prepare Scanner.
             Console.ForegroundColor = ConsoleColor.White;
@@ -89,8 +90,8 @@ namespace RainbowSQL2
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("[I] Do you want to use proxies(y/n)?");
             Console.Write("\nRainbowSQL/>");
-            string option = Console.ReadLine().ToLower();  
-             Console.ForegroundColor = ConsoleColor.White;
+            string option = Console.ReadLine().ToLower();
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("[I] Please specify number of threads!");
             Console.Write("\nRainbowSQL/>");
             int threads = Convert.ToInt32(Console.ReadLine());
@@ -158,10 +159,6 @@ namespace RainbowSQL2
                                 int port = Convert.ToInt32(Proxy_data[1]);
                                 Proxy_Number = Convert.ToInt32(Proxy_data[2]);
 
-                                //Add proxy to used pool to prevent using it 2 times in other threads.
-                                AddProxyToUsed(Proxy_Number);
-                                RemoveProxy(Proxy_Number);
-
                             }
 
                             //Append semicolon to parameter to check for SQL error
@@ -198,7 +195,7 @@ namespace RainbowSQL2
                             {
                                 //We cant be banned, cause like how. Only one request was made so there is some error on page. 404 or smh. Just skip over this element by setting success to 1.
                                 success = 1;
-                                                             
+
                             }
                         }
                     }
@@ -295,11 +292,6 @@ namespace RainbowSQL2
                                 string ip = Proxy_data[0];
                                 int port = Convert.ToInt32(Proxy_data[1]);
                                 Proxy_Number = Convert.ToInt32(Proxy_data[2]);
-
-                                //Add proxy to used pool to prevent using it 2 times in other threads.
-                                AddProxyToUsed(Proxy_Number);
-                                RemoveProxy(Proxy_Number);
-
                             }
 
                             //Prepare url
@@ -314,17 +306,11 @@ namespace RainbowSQL2
 
                             //Set success to 1 to exit loop and get another page
                             success = 1;
-
-                            //IF there was a success then copy proxies from used to available proxies.
-                            if(success == 1)
-                            {
-                                RotateProxiesFromUsedToAvilable();
-                            }
                         }
-                        catch
+                        catch (Exception e)
                         {
                             //If proxy on then remove this proxy cause it sucks.
-                            if(option == "y")
+                            if (option == "y")
                             {
                                 RemoveProxy(Proxy_Number);
                             }
@@ -345,15 +331,15 @@ namespace RainbowSQL2
                 }
 
             });
-                //Scraping has ended. Write ending
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("\n\n\n\n\n[S]Scraping has ended! Click enter to exit!");
-                Console.ForegroundColor = ConsoleColor.White;
-                //Save urls to file
-                File.WriteAllLines("urls.txt", urls);
-                Console.ReadKey();
+            //Scraping has ended. Write ending
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("\n\n\n\n\n[S]Scraping has ended! Click enter to exit!");
+            Console.ForegroundColor = ConsoleColor.White;
+            //Save urls to file
+            File.WriteAllLines("urls.txt", urls);
+            Console.ReadKey();
 
-        }        
+        }
         private static void DorkScannerBing2()
         {
             //Prepare Scanner.
@@ -379,7 +365,7 @@ namespace RainbowSQL2
             Console.WriteLine("[I] Please specify number of threads!");
             Console.Write("\nRainbowSQL/>");
             int threads = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine("Starting scraping using GOOGLE!");
+            Console.WriteLine("Starting scraping using BING!");
 
             //MULTI FUCKING THREADING.
             Parallel.For(0, dorks.Count, new ParallelOptions { MaxDegreeOfParallelism = threads }, x =>
@@ -430,33 +416,27 @@ namespace RainbowSQL2
                                 string ip = Proxy_data[0];
                                 int port = Convert.ToInt32(Proxy_data[1]);
                                 Proxy_Number = Convert.ToInt32(Proxy_data[2]);
-
-                                //Add proxy to used pool to prevent using it 2 times in other threads.
-                                AddProxyToUsed(Proxy_Number);
-                                RemoveProxy(Proxy_Number);
-
                             }
 
                             //Prepare url
                             int page_number = i * 50; //We are doing increments of 50.
                             string url = GenerateBingUrl(dork, page_number);
-
                             //Get HTML of search engine page
                             string htmlCode = client.DownloadString(url);
 
+                            //Check size. If smaller tahn 100kbs then proxy is banned and there is no results.
+                            int size = Convert.ToInt32((System.Text.ASCIIEncoding.ASCII.GetByteCount(htmlCode) / 1024f));
+                            if (size < 100)
+                            {
+                                throw new System.Exception();
+                            }
                             //Process HTML to get all href tags
                             ProcessHTML(htmlCode);
 
                             //Set success to 1 to exit loop and get another page
                             success = 1;
-
-                            //IF there was a success then copy proxies from used to available proxies.
-                            if (success == 1)
-                            {
-                                RotateProxiesFromUsedToAvilable();
-                            }
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             //If proxy on then remove this proxy cause it sucks.
                             if (option == "y")
@@ -493,7 +473,7 @@ namespace RainbowSQL2
 
         private static void WriteStatusBingScrape(int pages_per_dork, string dork)
         {
-            Console.WriteLine("Scraped: " + urls.Count()+"                  ");
+            Console.WriteLine("Scraped: " + urls.Count() + "                  ");
             Console.WriteLine("Pages per dork: " + pages_per_dork + "                  ");
             Console.WriteLine("Dorks: " + dorks.Count() + "                  ");
             Console.WriteLine("Proxies left: " + proxies.Count() + "     ");
@@ -551,11 +531,25 @@ namespace RainbowSQL2
         private static string[] PickRandomProxy()
         {
             //Get Random proxy
-            int proxy_number = random.Next(proxies.Count);
-            string ip = proxies[proxy_number].Split(':')[0];
-            string port = proxies[proxy_number].Split(':')[1];
-            string[] proxy_data = { ip, port, proxy_number.ToString() };
-            return proxy_data;
+            //Loop cause other threads may already deleted proxy.
+            int success = 0;
+            while (success != 1)
+            {
+                try
+                {
+                    int proxy_number = random.Next(proxies.Count);
+                    string ip = proxies[proxy_number].Split(':')[0];
+                    string port = proxies[proxy_number].Split(':')[1];
+                    string[] proxy_data = { ip, port, proxy_number.ToString() };
+                    success = 1;
+                    return proxy_data;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+            return null;
         }
         private static void RemoveProxy(int ProxyNumber)
         {
@@ -567,17 +561,6 @@ namespace RainbowSQL2
             {
                 //Ok so there was an error. 2 threads used same proxy and they want to delete it. one of them succeded other one dont so..... just dont do nothing.
             }
-        }
-        private static void AddProxyToUsed(int ProxyNumber)
-        {
-            proxies_used.Add(proxies[ProxyNumber]);
-        }
-
-        private static void RotateProxiesFromUsedToAvilable()
-        {
-            //Add and clear
-            proxies.AddRange(proxies_used);
-            proxies_used.Clear();
         }
         //URL Generators
         private static string GenerateGoogleUrl(string dork, int Page)
@@ -665,7 +648,7 @@ namespace RainbowSQL2
             protected override WebRequest GetWebRequest(Uri uri)
             {
                 WebRequest w = base.GetWebRequest(uri);
-                w.Timeout = 2000; //2s timeout
+                w.Timeout = 5000; //5s timeout
                 return w;
             }
         }

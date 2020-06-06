@@ -32,6 +32,3 @@ For now scraping is done using Bing so not every dorks will work!
 
 # Want to add a feature?          
 Just create issue with "enhancement" label.         
-
-# UPDATE          
-I will update and release the code in this week.      

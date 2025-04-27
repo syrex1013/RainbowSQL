@@ -32,3 +32,7 @@ For now scraping is done using Bing so not every dorks will work!
 
 # Want to add a feature?          
 Just create issue with "enhancement" label.         
+
+## GitAds Sponsored
+[![Sponsored by GitAds](https://gitads.dev/v1/ad-serve?source=syrex1013/rainbowsql@github)](https://gitads.dev/v1/ad-track?source=syrex1013/rainbowsql@github)
+

@@ -3,7 +3,7 @@ RainbowSQL is very fast dork&amp;SQL injection scanner.
 
 <img src="https://i.imgur.com/TJX4zn5.png"/>
 <img src="https://i.imgur.com/EyQL5Fl.png"/>                      
-
+<!-- GitAds-Verify: BHEKU97RTJARODTR3I3XBNCKJ5CLERVL -->
 
 # ATTENTION                   
 For now there will be no updates as I'm preparing graphical interface for this tool :)                        

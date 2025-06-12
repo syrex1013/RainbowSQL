@@ -1,3 +1,5 @@
+<!-- GitAds-Verify: CDTN9APJTTE91HJZ3FXCHB4CQHAB7P9V -->
+
 # RainbowSQL
 RainbowSQL is very fast dork&amp;SQL injection scanner.
 
